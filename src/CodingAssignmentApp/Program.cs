@@ -73,19 +73,7 @@ static void ConfigureServices (IServiceCollection services )
     services.AddSingleton<IFileUtility, FileUtility>();
     services.AddSingleton<IFileSystem, FileSystem>();
     
-    
-    // services.AddSingleton<Func<string, IContentParser>>(serviceProvider => key =>
-    // {
-    //     switch (key)
-    //     {
-    //         case ".csv":
-    //             return serviceProvider.GetRequiredService<CsvContentParser>();
-    //         case ".json":
-    //             return serviceProvider.GetRequiredService<JsonContentParser>();
-    //         default:
-    //             throw new NotSupportedException($"File extension {key} is not supported");
-    //     }
-    // });
     services.AddTransient<CsvContentParser>();
     services.AddTransient<JsonContentParser>();
+    services.AddTransient<XmlContentParser>();
 }
