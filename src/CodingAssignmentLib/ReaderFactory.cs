@@ -29,6 +29,5 @@ public class ReaderFactory : IReaderFactory
             default:
                 throw new NotSupportedException($"File extension {fileExtension} is not supported");
         }
-
     }
 }
