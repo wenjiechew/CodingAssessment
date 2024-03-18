@@ -3,8 +3,14 @@
 using System.IO.Abstractions;
 using CodingAssignmentLib;
 using CodingAssignmentLib.Abstractions;
+using CodingAssignmentLib.Parsers;
+using Microsoft.Extensions.DependencyInjection;
 
 Console.WriteLine("Coding Assignment!");
+var services = new ServiceCollection();
+ConfigureServices(services);
+var serviceProvider = services.BuildServiceProvider();
+
 
 do
 {
@@ -35,13 +41,18 @@ void Display()
     Console.WriteLine("Enter the name of the file to display its content:");
 
     var fileName = Console.ReadLine()!;
-    var fileUtility = new FileUtility(new FileSystem());
+    //var fileUtility = new FileUtility(new FileSystem());
     var dataList = Enumerable.Empty<Data>();
-
-    if (fileUtility.GetExtension(fileName) == ".csv")
-    {
-        dataList = new CsvContentParser().Parse(fileUtility.GetContent(fileName));
-    }
+    
+    var factory = serviceProvider.GetRequiredService<IReaderFactory>();
+    var fileUtility = serviceProvider.GetRequiredService<IFileUtility>();
+    
+    var reader = factory.CreateReader(fileName);
+    dataList = reader.Parse(fileUtility.GetContent(fileName));
+    //if (fileUtility.GetExtension(fileName) == ".csv")
+    //{
+    //    dataList = new CsvContentParser().Parse(fileUtility.GetContent(fileName));
+    //}
 
     Console.WriteLine("Data:");
 
@@ -54,4 +65,27 @@ void Display()
 void Search()
 {
     Console.WriteLine("Enter the key to search.");
+}
+
+static void ConfigureServices (IServiceCollection services )
+{
+    services.AddSingleton<IReaderFactory, ReaderFactory>();
+    services.AddSingleton<IFileUtility, FileUtility>();
+    services.AddSingleton<IFileSystem, FileSystem>();
+    
+    
+    // services.AddSingleton<Func<string, IContentParser>>(serviceProvider => key =>
+    // {
+    //     switch (key)
+    //     {
+    //         case ".csv":
+    //             return serviceProvider.GetRequiredService<CsvContentParser>();
+    //         case ".json":
+    //             return serviceProvider.GetRequiredService<JsonContentParser>();
+    //         default:
+    //             throw new NotSupportedException($"File extension {key} is not supported");
+    //     }
+    // });
+    services.AddTransient<CsvContentParser>();
+    services.AddTransient<JsonContentParser>();
 }

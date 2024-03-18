@@ -1,6 +1,6 @@
 ﻿using CodingAssignmentLib.Abstractions;
 
-namespace CodingAssignmentLib;
+namespace CodingAssignmentLib.Parsers;
 
 public class CsvContentParser : IContentParser
 {
