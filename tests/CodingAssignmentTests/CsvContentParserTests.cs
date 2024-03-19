@@ -14,10 +14,10 @@ public class CsvContentParserTests
     }
 
     [Test]
-    public void Parse_ReturnsData()
+    public async Task Parse_ReturnsData()
     {
         var content = "a,b" + Environment.NewLine + "c,d" + Environment.NewLine;
-        var dataList = _sut.Parse(content).ToList();
+        var dataList = await _sut.Parse(content);
         CollectionAssert.AreEqual(new List<Data>
         {
             new("a", "b"),

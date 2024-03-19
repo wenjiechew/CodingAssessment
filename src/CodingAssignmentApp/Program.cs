@@ -25,10 +25,10 @@ do
     switch (Console.ReadLine())
     {
         case "1":
-            Display();
+            await Display();
             break;
         case "2":
-            Search();
+            await Search();
             break;
         case "3":
             return;
@@ -38,19 +38,14 @@ do
 } while (true);
 
 
-void Display()
+async Task Display()
 {
     Console.WriteLine("Enter the name of the file to display its content:");
 
     var fileName = Console.ReadLine()!;
-    //var fileUtility = new FileUtility(new FileSystem());
-    
+
     var reader = factory.CreateReader(fileUtility.GetExtension(fileName));
-    var dataList = reader.Parse(fileUtility.GetContent(fileName));
-    //if (fileUtility.GetExtension(fileName) == ".csv")
-    //{
-    //    dataList = new CsvContentParser().Parse(fileUtility.GetContent(fileName));
-    //}
+    var dataList = await reader.Parse(fileUtility.GetContent(fileName));
 
     Console.WriteLine("Data:");
 
@@ -60,7 +55,7 @@ void Display()
     }
 }
 
-void Search()
+async Task Search()
 {
     var allFiles = fileUtility.GetAllFiles();
     Console.WriteLine("Enter the key to search.");
@@ -69,7 +64,7 @@ void Search()
     foreach (var file in allFiles)
     {
         var reader = factory.CreateReader(fileUtility.GetExtension(file));
-        var list = reader.Parse(fileUtility.GetContent(file));
+        var list = await reader.Parse(fileUtility.GetContent(file));
         
         var searchedCollection = list
             .Where(e => string.Equals(e.Key, searchKey, StringComparison.CurrentCultureIgnoreCase));

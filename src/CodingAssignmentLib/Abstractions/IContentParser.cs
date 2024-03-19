@@ -2,5 +2,5 @@
 
 public interface IContentParser
 {
-    IEnumerable<Data> Parse(string content);
+    Task<IEnumerable<Data>> Parse(string content);
 }

@@ -6,7 +6,7 @@ namespace CodingAssignmentLib.Parsers;
 
 public class XmlContentParser : IContentParser
 {
-    public IEnumerable<Data> Parse(string content)
+    public Task< IEnumerable<Data>> Parse(string content)
     {
         var list = new List<Data>();
         
@@ -15,11 +15,11 @@ public class XmlContentParser : IContentParser
         foreach (var element in doc.Descendants("Data"))
         {
             var key = element.Element("Key")?.Value;
-            var Value = element.Element("Value")?.Value;
+            var value = element.Element("Value")?.Value;
             
-            list.Add(new Data(key, Value));
+            list.Add(new Data(key!, value!));
         }
 
-        return list.AsEnumerable();
+        return Task.FromResult<IEnumerable<Data>>(list);
     }
 }

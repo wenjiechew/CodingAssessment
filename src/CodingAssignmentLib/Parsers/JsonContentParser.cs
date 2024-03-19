@@ -6,14 +6,14 @@ namespace CodingAssignmentLib.Parsers;
 
 public class JsonContentParser : IContentParser
 {
-    public IEnumerable<Data> Parse(string content)
+    public Task<IEnumerable<Data>> Parse(string content)
     {
         var list = new List<Data>();
         var jsonArray = JsonSerializer.Deserialize<JsonArray>(content);
-        foreach (var node in jsonArray)
+        foreach (var node in jsonArray!)
         {
-            list.Add(new Data(node["Key"].ToString(), node["Value"].ToString()));
+            list.Add(new Data(node!["Key"]!.ToString(), node["Value"]!.ToString()));
         }
-        return list.AsEnumerable();
+        return Task.FromResult<IEnumerable<Data>>(list);
     }
 }

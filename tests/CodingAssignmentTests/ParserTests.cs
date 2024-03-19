@@ -9,14 +9,14 @@ namespace CodingAssignmentTests;
 public class ParserTests
 {
     [Fact]
-    public void Parse_ReturnsExpectedData_FromJsonString()
+    public async Task Parse_ReturnsExpectedData_FromJsonString()
     {
         // Arrange
         var parser = new JsonContentParser();
         var jsonContent = "[{\"Key\": \"aaa\", \"Value\": \"aaa\"}, {\"Key\": \"bbbb\", \"Value\": \"bbbb\"}]";
 
         // Act
-        var result = parser.Parse(jsonContent);
+        var result = await parser.Parse(jsonContent);
 
         // Assert
         Assert.Collection(result,
@@ -25,14 +25,14 @@ public class ParserTests
     }
     
     [Fact]
-    public void Parse_ReturnsExpectedData_FromXmlString()
+    public async Task Parse_ReturnsExpectedData_FromXmlString()
     {
         // Arrange
         var parser = new XmlContentParser();
         var xmlContent = "<Datas><Data><Key>someKey</Key><Value>someValue</Value></Data><Data><Key>someKey1</Key><Value>someValue1</Value></Data></Datas>";
 
         // Act
-        var result = parser.Parse(xmlContent);
+        var result = await parser.Parse(xmlContent);
 
         // Assert
         Assert.Collection(result,
