@@ -13,10 +13,4 @@
       <PackageReference Include="TestableIO.System.IO.Abstractions" Version="19.2.26" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Update="TestFiles\test.csv">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
 </Project>

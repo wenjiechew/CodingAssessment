@@ -67,20 +67,20 @@ async Task Search()
         var list = await reader.Parse(fileUtility.GetContent(file));
         
         var searchedCollection = list
-            .Where(e => string.Equals(e.Key, searchKey, StringComparison.CurrentCultureIgnoreCase));
+            .Where(IsEqualToSearchKey);
         
         foreach (var eachData in searchedCollection)
         {
             Console.WriteLine($"Key:{eachData.Key} Value:{eachData.Value} FileName: {file}");
         }
     }
-    
 
+    return;
 
-
-
-        
-    
+    bool IsEqualToSearchKey(Data e)
+    {
+        return string.Equals(e.Key, searchKey, StringComparison.CurrentCultureIgnoreCase);
+    }
 }
 
 static void ConfigureServices (IServiceCollection services )
