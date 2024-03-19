@@ -27,8 +27,10 @@ public class FileUtility : IFileUtility
         // *.* -> the first * represents wildcard of fileName, second * represents the wildcard of fileExtensions
         var files = _fileSystem.Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories)
             .Where(IsSupportedFileType);
+
         return files;
     }
+
     private static bool IsSupportedFileType(string filePath)
     {
         return filePath.EndsWith(".csv", StringComparison.OrdinalIgnoreCase) ||

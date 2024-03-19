@@ -67,21 +67,26 @@ void Search()
     Console.WriteLine("Enter the key to search.");
     var searchKey = Console.ReadLine()!;
 
-    var allData = new List<Data>();
     foreach (var file in allFiles)
     {
         var reader = factory.CreateReader(fileUtility.GetExtension(file));
         var list = reader.Parse(fileUtility.GetContent(file));
-
-        var searchedElement = list.FirstOrDefault(e => string.Equals(e.Key, searchKey, StringComparison.CurrentCultureIgnoreCase));
-
-        if (!searchedElement.Equals(default(Data)))
+        
+        var searchedCollection = list
+            .Where(e => string.Equals(e.Key, searchKey, StringComparison.CurrentCultureIgnoreCase));
+        
+        foreach (var eachData in searchedCollection)
         {
-            Console.WriteLine($"Key:{searchedElement.Key} Value:{searchedElement.Value} FileName: {file}");
+            Console.WriteLine($"Key:{eachData.Key} Value:{eachData.Value} FileName: {file}");
         }
-            
-            
     }
+    
+
+
+
+
+        
+    
 }
 
 static void ConfigureServices (IServiceCollection services )

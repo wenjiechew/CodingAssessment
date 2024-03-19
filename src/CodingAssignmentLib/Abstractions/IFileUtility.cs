@@ -7,5 +7,5 @@ public interface IFileUtility
     string GetExtension(string fileName);
     string GetContent(string fileName);
 
-    IEnumerable<string> GetAllFiles(string directory = "data/");
+    IEnumerable<string> GetAllFiles(string directory = "data");
 }
