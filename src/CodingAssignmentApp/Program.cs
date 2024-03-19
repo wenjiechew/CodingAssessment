@@ -46,7 +46,7 @@ void Display()
     //var fileUtility = new FileUtility(new FileSystem());
     var dataList = Enumerable.Empty<Data>();
     
-    var reader = factory.CreateReader(fileName);
+    var reader = factory.CreateReader(fileUtility.GetExtension(fileName));
     dataList = reader.Parse(fileUtility.GetContent(fileName));
     //if (fileUtility.GetExtension(fileName) == ".csv")
     //{

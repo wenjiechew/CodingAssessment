@@ -6,18 +6,15 @@ namespace CodingAssignmentLib;
 
 public class ReaderFactory : IReaderFactory
 {
-    private readonly IFileUtility _fileUtility;
     private readonly IServiceProvider _serviceProvider;
 
-    public ReaderFactory(IFileUtility fileUtility, IServiceProvider serviceProvider)
+    public ReaderFactory(IServiceProvider serviceProvider)
     {
-        _fileUtility = fileUtility;
         _serviceProvider = serviceProvider;
     }
 
-    public IContentParser CreateReader(string fileName)
+    public IContentParser CreateReader(string fileExtension)
     {
-        var fileExtension = _fileUtility.GetExtension(fileName);
         switch (fileExtension)
         {
             case ".csv":
