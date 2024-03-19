@@ -11,9 +11,13 @@ public class XmlContentParser : IContentParser
         var list = new List<Data>();
         
         var doc = XDocument.Parse(content);
-        foreach (var element in doc.Root!.Elements())
+        //foreach (var element in doc.Root!.DescendantNodes("Data"))
+        foreach (var element in doc.Descendants("Data"))
         {
-            list.Add(new Data(element.Name.LocalName, element.Value));
+            var key = element.Element("Key")?.Value;
+            var Value = element.Element("Value")?.Value;
+            
+            list.Add(new Data(key, Value));
         }
 
         return list.AsEnumerable();

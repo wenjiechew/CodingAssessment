@@ -11,6 +11,8 @@ var services = new ServiceCollection();
 ConfigureServices(services);
 var serviceProvider = services.BuildServiceProvider();
 
+var factory = serviceProvider.GetRequiredService<IReaderFactory>();
+var fileUtility = serviceProvider.GetRequiredService<IFileUtility>();
 
 do
 {
@@ -43,9 +45,6 @@ void Display()
     var fileName = Console.ReadLine()!;
     //var fileUtility = new FileUtility(new FileSystem());
     var dataList = Enumerable.Empty<Data>();
-    
-    var factory = serviceProvider.GetRequiredService<IReaderFactory>();
-    var fileUtility = serviceProvider.GetRequiredService<IFileUtility>();
     
     var reader = factory.CreateReader(fileName);
     dataList = reader.Parse(fileUtility.GetContent(fileName));
